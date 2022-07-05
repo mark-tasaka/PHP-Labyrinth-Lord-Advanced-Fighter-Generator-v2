@@ -4,6 +4,11 @@ The Labyrinth Lord Advanced Companion Fighter Character Generator Version 2 is t
 -------------
 
 
+Update 1.01: 2022-07-05
+
+Updates to fighter.php, fighter.css, clothing.php, and gear.php. 
+
+
 Initial commit: 2022-07-04
 
 The initial commit for the Labyrinth Lord Advanced Companion Edition Fighter Character Generator Version 2.
