@@ -40,6 +40,14 @@ function getRandomClothing()
     
     $hasClothing = array();
 
+    array_push($hasClothing, $clothingArray[$belt]);
+    array_push($hasClothing, $clothingArray[$boots]);
+    array_push($hasClothing, $clothingArray[$hat]);
+    array_push($hasClothing, $clothingArray[$cloak]);
+    array_push($hasClothing, $clothingArray[$shirt]);
+    array_push($hasClothing, $clothingArray[$pants]);
+
+    return $hasClothing;
 
 }
 

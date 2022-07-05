@@ -214,6 +214,21 @@ body{
 }
 
 
+#clothingList{
+    position:absolute;
+    top: 635px;
+    left: 670px;
+	font-size: 0.6em;
+}
+
+#clothingList2{
+    position:absolute;
+    top: 635px;
+    left: 925px;
+	font-size: 0.6em;
+}
+
+
 #totalWeightGear{
     position:absolute;
     top: 770px;

@@ -384,7 +384,49 @@
             $totalWeightGear += getGear($select)[1];
         }
 
-        $totalWeightCarried = $armourAndWeapomWeight + $totalWeightGear + $coinWeight;
+        
+        $clothingArray = array();
+        $clothingNames = array();
+        $clothingWeight = array();
+
+            //For Random Select Clothing
+    if(isset($_POST['theCheckBoxRandomClothing']) && $_POST['theCheckBoxRandomClothing'] == 1) 
+    {
+        $clothingArray = getRandomClothing();
+    }
+    else
+    {
+        //For Manually select clothing
+        if(isset($_POST["theClothing"]))
+            {
+                foreach($_POST["theClothing"] as $clothing)
+                {
+                    array_push($clothingArray, $clothing);
+                }
+            }
+
+    }
+
+    
+        foreach($clothingArray as $select)
+        {
+            array_push($clothingNames, getClothing($select)[0]);
+        }
+        
+        foreach($clothingArray as $select)
+        {
+            array_push($clothingWeight, getClothing($select)[1]);
+        }
+        
+        $totalWeightClothing = 0;
+
+        foreach($clothingArray as $select)
+        {
+            $totalWeightClothing += getClothing($select)[1];
+        }
+
+
+        $totalWeightCarried = $armourAndWeapomWeight + $totalWeightGear + $coinWeight + $totalWeightClothing;
 
         $turnMovement = turnMovement($totalWeightCarried);
         $encounterMovement = encounterMovement($totalWeightCarried);
@@ -899,6 +941,32 @@
            }
            ?>
        </span>
+       
+
+       <span id="clothingList">
+           <?php
+           foreach($clothingNames as $theClothing)
+           {
+               echo $theClothing;
+               echo "<br/>";
+           }
+           ?>
+       </span>
+
+       
+       <span id="clothingList2">
+           <?php
+           foreach($clothingWeight as $theClothing)
+           {
+               echo $theClothing;
+               echo "<br/>";
+           }
+           ?>
+       </span>
+
+
+
+
 
        <span id="totalWeightCarried">
            <?php
