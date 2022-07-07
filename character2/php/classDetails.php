@@ -49,6 +49,53 @@ function getHitPoints($level, $conMod)
 
 }
 
+function getAdvancedHitPoints($level, $conMod)
+{
+    $hitPoints = 0;
+
+    if($level < 10)
+    {
+        for($i = 0; $i < $level; ++$i)
+        {
+            $levelHP = rand(3, 10);
+            $levelHP += $conMod;
+    
+            if($levelHP < 3)
+            {
+                $levelHP = 3;
+            }
+    
+            $hitPoints += $levelHP;
+    
+        }
+    }
+    else
+    {
+        for($i = 0; $i < 10; ++$i)
+        {
+            $levelHP = rand(3, 10);
+            $levelHP += $conMod;
+    
+            if($levelHP < 3)
+            {
+                $levelHP = 3;
+            }
+    
+            $hitPoints += $levelHP;
+    
+        }
+
+        $levelTenPlusHP = ($level - 9) * 2;
+
+        $hitPoints += $levelTenPlusHP;
+
+    }
+
+
+    return $hitPoints;
+
+}
+
 
 function saveBreathAttack($level)
 {
@@ -216,19 +263,19 @@ function primeReq($abilityScore)
     
     if($abilityScore >= 3 && $abilityScore <=5)
         {
-            return "-10% Experience Point Adjustment (Prime Requisite)</br>";
+            return "-10% Experience Point Adjustment (Prime Requisite)<br/><br/>";
         }
     else if($abilityScore >= 6 && $abilityScore <=8)
         {
-            return "-5% Experience Point Adjustment (Prime Requisite)</br>";
+            return "-5% Experience Point Adjustment (Prime Requisite)<br/><br/>";
         }
     else if($abilityScore >= 13 && $abilityScore <=15)
         {
-            return "+5% Experience Point Adjustment (Prime Requisite)</br>";
+            return "+5% Experience Point Adjustment (Prime Requisite)<br/><br/>";
         }
     else if($abilityScore >= 16 && $abilityScore <=18)
         {
-            return "+10% Experience Point Adjustment (Prime Requisite)</br>";
+            return "+10% Experience Point Adjustment (Prime Requisite)<br/><br/>";
         }
     else
         {
@@ -283,6 +330,10 @@ function strengthModifierDescription($abilityScore)
         {
             $desc = "+3 to hit, damage & forcing doors";
         }
+    else if($abilityScore === 19)
+        {
+            $desc = "+3 to hit (+4 damage), damage & forcing doors";
+        }
     
     return $desc;
 }
@@ -315,6 +366,10 @@ function dexterityModifierDescription($abilityScore)
     else if($abilityScore === 18)
         {
             $desc = "-3 AC; +3 Missile Attack; +2 Optional Initiative";
+        }   
+    else if($abilityScore === 19)
+        {
+            $desc = "-4 AC; +3 Missile Attack; +2 Optional Initiative";
         }
     
     return $desc;
@@ -326,27 +381,31 @@ function constitutionModifierDescription($abilityScore)
     
     if($abilityScore === 3)
         {
-            $desc = "-3 Hit Points per<br/>Hit Die";
+            $desc = "-3 Hit Points per Hit Die; -2 Poison Save adj";
         }
     else if($abilityScore >=4 && $abilityScore <=5)
         {
-            $desc = "-2 Hit Points per<br/>Hit Die";
+            $desc = "-2 Hit Points per Hit Die; -1 Poison Save adj";
         }
     else if($abilityScore >=6 && $abilityScore <=8)
         {
-            $desc = "-1 Hit Points per<br/>Hit Die";
+            $desc = "-1 Hit Points per Hit Die";
         }
     else if($abilityScore >=13 && $abilityScore <=15)
         {
-            $desc = "+1 Hit Points per<br/>Hit Die";
+            $desc = "+1 Hit Points per Hit Die";
         }
     else if($abilityScore >=16 && $abilityScore <=17)
         {
-            $desc = "+2 Hit Points per<br/>Hit Die";
+            $desc = "+2 Hit Points per Hit Die";
         }
     else if($abilityScore === 18)
         {
-            $desc = "+3 Hit Points per<br/>Hit Die";
+            $desc = "+3 Hit Points per Hit Die";
+        }   
+    else if($abilityScore === 19)
+        {
+            $desc = "+4 Hit Points per Hit Die; +1 Poison Save adj";
         }
     
     return $desc;
@@ -413,7 +472,11 @@ function wisdomModifierDescription($abilityScore)
     else if($abilityScore === 18)
         {
             $desc = "+3 Saving Throw against all magical effects";
-        }
+        }   
+    else if($abilityScore === 19)
+    {
+        $desc = "+4 Saving Throw against all magical effects";
+    }
     
     return $desc;
 }
@@ -533,6 +596,89 @@ function getThacoCheck($score)
     }
 
     return $score;
+}
+
+function startingAge($species)
+{
+    $age = 0;
+
+    if($species == "Human")
+    {
+        $age += 16;
+        $dieRoll = rand(1, 4);
+        $age += $dieRoll;
+    }
+
+    if($species == "Dwarf")
+    {
+        $age += 40;
+        $dieRoll = rand(1, 6);
+        $dieRoll2= rand(1, 6);
+        $dieRoll3 = rand(1, 6);
+        $dieRoll4 = rand(1, 6);
+        $age += $dieRoll;
+        $age += $dieRoll2;
+        $age += $dieRoll3;
+        $age += $dieRoll4;
+    }
+
+    if($species == "Elf")
+    {
+        $age += 125;
+        $dieRoll = rand(1, 8);
+        $dieRoll2= rand(1, 8);
+        $dieRoll3 = rand(1, 8);
+        $dieRoll4 = rand(1, 8);
+        $dieRoll5 = rand(1, 8);
+        $age += $dieRoll;
+        $age += $dieRoll2;
+        $age += $dieRoll3;
+        $age += $dieRoll4;
+        $age += $dieRoll5;
+    }
+
+    if($species == "Gnome")
+    {
+        $age += 60;
+        $dieRoll = rand(1, 6);
+        $dieRoll2= rand(1, 6);
+        $dieRoll3 = rand(1, 6);
+        $age += $dieRoll;
+        $age += $dieRoll2;
+        $age += $dieRoll3;
+    }
+
+    if($species == "Halfling")
+    {
+        $age += 20;
+        $dieRoll = rand(1, 6);
+        $dieRoll2= rand(1, 6);
+        $age += $dieRoll;
+        $age += $dieRoll2;
+    }
+
+    if($species == "Half-Elf")
+    {
+        $age += 20;
+        $dieRoll = rand(1, 4);
+        $dieRoll2= rand(1, 4);
+        $dieRoll3 = rand(1, 4);
+        $dieRoll4= rand(1, 4);
+        $age += $dieRoll;
+        $age += $dieRoll2;
+        $age += $dieRoll3;
+        $age += $dieRoll4;
+    }
+
+    if($species == "Half-Orc")
+    {
+        $age += 14;
+        $dieRoll = rand(1, 4);
+        $age += $dieRoll;
+    }
+
+    return $age;
+
 }
 
 

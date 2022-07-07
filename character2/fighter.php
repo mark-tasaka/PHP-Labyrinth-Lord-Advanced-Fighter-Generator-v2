@@ -6,8 +6,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     
 	<meta charset="UTF-8">
-	<meta name="description" content="Dungeon Crawl Classics Fighter Character Generator..">
-	<meta name="keywords" content="Dungeon Crawl Classics,,HTML5,CSS,JavaScript">
+	<meta name="description" content="Labyrnith Lord Advance Companion Fighter Character Generator..">
+	<meta name="keywords" content="Labyrnith Lord Advance Companion,,HTML5,CSS,JavaScript">
 	<meta name="author" content="Mark Tasaka 2022">
     
     <link rel="icon" href="../../../../images/favicon/icon.png" type="image/png" sizes="16x16"> 
@@ -38,6 +38,7 @@
     include 'php/movementRate.php';
     include 'php/clothing.php';
     include 'php/demiHumans.php';
+    include 'php/abilityAddition.php';
     
 
 
@@ -106,12 +107,6 @@
         {
             $alignment = $_POST["theAlignment"];
         }
-    
-        if(isset($_POST["theLevel"]))
-        {
-            $level = $_POST["theLevel"];
-        
-        } 
 
         
         
@@ -120,18 +115,37 @@
             $playerName = $_POST["thePlayerName"];
     
         }
+        
+        
+        if(isset($_POST["theSpecies"]))
+        {
+            $species = $_POST["theSpecies"];
+    
+        }
+    
+        if(isset($_POST["theLevel"]))
+        {
+            $level = $_POST["theLevel"];
+        
+        } 
+
+        $level = levelLimit($species, $level);
+
+        
+        if(isset($_POST['theOptionalStartingAge']) && $_POST['theOptionalStartingAge'] == 1) 
+        {
+            $age = startingAge($species);
+        }
+        else
+        {
+            $age = 0;
+        } 
+    
+
 
 
         
         $xpNextLevel = getXPNextLevel ($level);
-        
-        /*
-        if(isset($_POST["theAbilityScore"]))
-        {
-            $abilityScoreGen = $_POST["theAbilityScore"];
-        
-        }*/
-        
         
         if(isset($_POST["theWealth"]))
         {
@@ -171,36 +185,42 @@
             {
                 $strengthString = $_POST["theStrength"];
                 $strength = intval($strengthString);
+                $strength = demiHumanStrengthRange($strength, $species);
             }      
 
             if(isset($_POST["theDexterity"]))
             {
                 $dexterityString = $_POST["theDexterity"];
                 $dexterity = intval($dexterityString);
+                $dexterity = demiHumanDexterityRange($dexterity, $species);
             }     
 
             if(isset($_POST["theConstitution"]))
             {
                 $constitutionString = $_POST["theConstitution"];
                 $constitution = intval($constitutionString);
+                $constitution = demiHumanConstitutionRange($constitution, $species);
             }       
 
             if(isset($_POST["theIntelligence"]))
             {
                 $intelligenceString = $_POST["theIntelligence"];
                 $intelligence = intval($intelligenceString);
+                $intelligence = demiHumanIntelligenceRange($intelligence, $species);
             }  
 
             if(isset($_POST["theWisdom"]))
             {
                 $wisdomString = $_POST["theWisdom"];
                 $wisdom = intval($wisdomString);
+                $wisdom = demiHumanWisdomRange($wisdom, $species);
             }  
 
             if(isset($_POST["theCharisma"]))
             {
                 $charismaString = $_POST["theCharisma"];
                 $charisma = intval($charismaString);
+                $charisma = demiHumanCharismaRange($charisma, $species);
             }  
 
             $generationMessage = "Custom Ability Scores;";
@@ -225,11 +245,17 @@
             }       
     
             $strength = $abilityScoreArray[0];
+            $strength = demiHumanStrengthRange($strength, $species);
             $dexterity = $abilityScoreArray[1];
+            $dexterity = demiHumanDexterityRange($dexterity, $species);
             $constitution = $abilityScoreArray[2];
+            $constitution = demiHumanConstitutionRange($constitution, $species);
             $intelligence = $abilityScoreArray[3];
+            $intelligence = demiHumanIntelligenceRange($intelligence, $species);
             $wisdom = $abilityScoreArray[4];
+            $wisdom = demiHumanWisdomRange($wisdom, $species);
             $charisma = $abilityScoreArray[5];
+            $charisma = demiHumanCharismaRange($charisma, $species);
             
             
             $generationMessage = generationMesssage ($abilityScoreGen);
@@ -290,8 +316,18 @@
        $armourClass = $baseArmourClass + $totalAcDefense;
 
 
-       //Hit Points
-       $hitPoints = getHitPoints($level, $constitutionMod);
+       if(isset($_POST['theAdvancedHD']) && $_POST['theAdvancedHD'] == 1) 
+       {
+           $hitPoints = getAdvancedHitPoints($level, $constitutionMod);   
+           $hdMessage = "HD: d10 (Adv HD)";
+       }
+       else
+       {
+            //Hit Points
+            $hitPoints = getHitPoints($level, $constitutionMod);
+            $hdMessage = "HD: d8";
+        }
+       
 
 
 
@@ -424,23 +460,39 @@
         {
             $totalWeightClothing += getClothing($select)[1];
         }
+        
+        $totalWeightClothing += $totalWeightClothing;
 
-
-        $totalWeightCarried = $armourAndWeapomWeight + $totalWeightGear + $coinWeight + $totalWeightClothing;
+        $totalWeightCarried = $armourAndWeapomWeight + $totalWeightGear + $coinWeight;
 
         $turnMovement = turnMovement($totalWeightCarried);
         $encounterMovement = encounterMovement($totalWeightCarried);
         $runningMovement = runningMovement($totalWeightCarried);
 
+        $saveBreathMod = demiHumanBreathMod($species);
+        $savePoisonDeathMod = demiHumanPoisonMod($species);
+        $savePetrifyMod = demiHumanPetrifyMod($species);
+        $saveWandsMod = demiHumanWandMod($species);
+        $saveSpellsMod = demiHumanSpellMod($species);
+
+
         $saveBreath = saveBreathAttack($level);
+        $saveBreath -= $saveBreathMod;
         $savePoisonDeath = savePoisonDeath($level);
+        $savePoisonDeath -= $savePoisonDeathMod;
         $savePetrify = savePetrify($level);
+        $savePetrify -= $savePetrifyMod;
         $saveWands = saveWands($level);
         $saveWands -= $wisdomMod;
+        $saveWands -= $saveWandsMod;
         $saveSpells = saveSpells($level);
         $saveSpells -= $wisdomMod;
+        $saveSpells -= $saveSpellsMod;
 
         $primeReq = primeReq($strength);
+        $resSurvival = survivalResurrection($constitution);
+        $shockSurvival = survivalShock($constitution);
+        $demiHumanTraits = demiHumanTraits($species);
         $secondAttack = secondAttack($level);
 
         $strengthDescription = strengthModifierDescription($strength);
@@ -451,6 +503,7 @@
         $charismaDescription = charismaModifierDescription($charisma);
 
         $meleeHitAC0 = getThaco($level, $strengthMod);
+        $meleeHitAC0 = getThacoCheck($meleeHitAC0);
         $meleeHitAC1 = $meleeHitAC0  - 1;
         $meleeHitAC1 = getThacoCheck($meleeHitAC1);
         $meleeHitAC2 = $meleeHitAC0  - 2;
@@ -471,6 +524,7 @@
         $meleeHitAC9 = getThacoCheck($meleeHitAC9);
 
         $missileHitAC0 = getThaco($level, $dexterityMod);
+        $missileHitAC0 = getThacoCheck($missileHitAC0);
         $missileHitAC1 = $missileHitAC0  - 1;
         $missileHitAC1 = getThacoCheck($missileHitAC1);
         $missileHitAC2 = $missileHitAC0  - 2;
@@ -722,6 +776,29 @@
        </span>
        
        
+       <span id="age">
+           <?php
+           if($age === 0)
+           {
+            echo "";
+           }
+           else
+           {
+            echo $age . " yrs";
+           }
+           ?>
+       </span>
+       
+       
+       
+       <span id="gender">
+           <?php
+           echo $genderName;
+           ?>
+       </span>
+       
+       
+       
        
        <span id="class">Fighter</span>
        
@@ -743,9 +820,12 @@
            echo $hitPoints;
            ?>
            </span>
-
-
-       
+           
+       <span id="hdMessage">
+           <?php
+           echo $hdMessage;
+           ?>
+           </span>
 
        <span id="wealth">
        <?php
@@ -796,7 +876,12 @@
                 echo $playerName;
            ?>
         </span>
-       
+        
+       <span id="species">
+           <?php
+                echo $species;
+           ?>
+        </span>
        
        
               
@@ -1042,6 +1127,8 @@
         <span id="classAbilities">
             <?php
                 echo $primeReq;
+                echo "Survive Resurrection " . $resSurvival . "%; Survive Transformative Shock " . $shockSurvival . "%<br/><br/>"; 
+                echo $demiHumanTraits;
                 echo $secondAttack;
             ?>
         </span>

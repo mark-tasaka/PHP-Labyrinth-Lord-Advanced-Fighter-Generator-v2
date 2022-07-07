@@ -18,27 +18,41 @@ body{
 }
 
 
-/*DCC Warrior Generator Version 4 post data css*/
+/*Labyrnith Lord Advanced Version 2*/
 
 #characterName{
     position:absolute;
-    top: 105px;
+    top: 108px;
     left: 55px;
 	font-size: 0.85em;
 }
 
 #characterName2{
     position:absolute;
-    top: 105px;
+    top: 108px;
     left: 55px;
+	font-size: 0.85em;
+}
+
+#age{
+    position:absolute;
+    top: 108px;
+    left: 260px;
+	font-size: 0.85em;
+}
+
+#species{
+    position:absolute;
+    top: 108px;
+    left: 335px;
 	font-size: 0.85em;
 }
 
 
 #gender{
     position:absolute;
-    top: 105px;
-    left: 330px;
+    top: 108px;
+    left: 420px;
 	font-size: 0.85em;
 }
 
@@ -53,8 +67,8 @@ body{
 
 #level{
     position:absolute;
-    top: 105px;
-    left: 445px;
+    top: 108px;
+    left: 500px;
 	font-size: 0.85em;
 }
 
@@ -62,8 +76,8 @@ body{
 
 #class{
     position:absolute;
-    top: 105px;
-    left: 500px;
+    top: 108px;
+    left: 545px;
 	font-size: 0.85em;
 }
 
@@ -71,7 +85,7 @@ body{
 #playerName{
     position:absolute;
     top: 180px;
-    left: 195px;
+    left: 225px;
 	font-size: 0.85em;
 }
 
@@ -610,7 +624,8 @@ body{
     position:absolute;
     top: 970px;
     left: 45px;
-	font-size: 0.7em;
+	font-size: 0.55em;
+    width: 580px;
 }
 
 
@@ -677,6 +692,13 @@ body{
     top: 420px;
     left: 220px;
 	font-size: 1.5em;
+}
+
+#hdMessage{
+    position:absolute;
+    top: 460px;
+    left: 95px;
+	font-size: 0.5em;
 }
 
 #reflex{
@@ -796,7 +818,7 @@ body{
 
 #dieRollMethod{
     position: absolute;
-    top: 105px;
+    top: 108px;
     left:  50px;
 	font-size: 0.5em;
 }

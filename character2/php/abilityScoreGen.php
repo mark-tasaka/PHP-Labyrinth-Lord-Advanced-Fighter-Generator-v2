@@ -224,6 +224,10 @@ function getAbilityModifier($score)
     else if($score == 18)
     {
         $modifier = 3;
+    }            
+    else if($score == 19)
+    {
+        $modifier = 4;
     }
 
     return $modifier;
@@ -240,6 +244,265 @@ function getModSign($mod)
         return $mod;
     }
 }
+
+
+function demiHumanStrengthRange($abilityScore, $species)
+{
+    if($species === "Dwarf")
+    {
+        if($abilityScore < 8)
+        {
+            $abilityScore = 8;
+        }
+    }
+    
+    if($species === "Gnome")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+    }
+    
+    if($species === "Halfling")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+        
+        if($abilityScore > 17)
+        {
+            $abilityScore = 17;
+        }
+    }
+    
+    if($species === "Half-Orc")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+    }
+
+    return $abilityScore;
+
+}
+
+function demiHumanDexterityRange($abilityScore, $species)
+{
+    if($species === "Dwarf")
+    {
+        if($abilityScore > 17)
+        {
+            $abilityScore = 17;
+        }
+    }
+    
+    if($species === "Elf")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+        $abilityScore += 1;
+    }
+    
+    if($species === "Halfling")
+    {
+        if($abilityScore < 8)
+        {
+            $abilityScore = 8;
+        }
+        $abilityScore += 1;
+    }
+    
+    if($species === "Half-Elf")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+    }
+    
+    if($species === "Half-Orc")
+    {
+        if($abilityScore > 17)
+        {
+            $abilityScore = 17;
+        }
+    }
+
+    return $abilityScore;
+
+}
+
+
+function demiHumanConstitutionRange($abilityScore, $species)
+{
+    if($species === "Dwarf")
+    {
+        if($abilityScore < 11)
+        {
+            $abilityScore = 11;
+        }
+        $abilityScore +=1;
+    }
+    
+    if($species === "Elf")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+    }
+    
+    if($species === "Gnome")
+    {
+        if($abilityScore < 8)
+        {
+            $abilityScore = 8;
+        }
+    }
+    
+    if($species === "Halfling")
+    {
+        if($abilityScore < 10)
+        {
+            $abilityScore = 10;
+        }
+    }
+    
+    if($species === "Half-Elf")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+    }
+    
+    if($species === "Half-Orc")
+    {
+        if($abilityScore < 12)
+        {
+            $abilityScore = 12;
+        }
+        $abilityScore +=1;
+    }
+
+    return $abilityScore;
+
+}
+
+
+function demiHumanIntelligenceRange($abilityScore, $species)
+{   
+    if($species === "Elf")
+    {
+        if($abilityScore < 8)
+        {
+            $abilityScore = 8;
+        }
+    }
+    
+    if($species === "Gnome")
+    {
+        if($abilityScore < 7)
+        {
+            $abilityScore = 7;
+        }
+    }
+    
+    if($species === "Halfling")
+    {
+        if($abilityScore < 6)
+        {
+            $abilityScore = 6;
+        }
+    }
+    
+    if($species === "Half-Elf")
+    {
+        if($abilityScore < 4)
+        {
+            $abilityScore = 4;
+        }
+    }
+    
+    if($species === "Half-Orc")
+    {
+        if($abilityScore > 17)
+        {
+            $abilityScore = 17;
+        }
+    }
+
+    return $abilityScore;
+
+}
+
+
+function demiHumanWisdomRange($abilityScore, $species)
+{   
+    if($species === "Halfling")
+    {
+        if($abilityScore > 17)
+        {
+            $abilityScore = 17;
+        }
+    }
+    
+    if($species === "Half-Elf")
+    {
+        if($abilityScore < 4)
+        {
+            $abilityScore = 4;
+        }
+    }
+    
+    if($species === "Half-Orc")
+    {
+        if($abilityScore > 14)
+        {
+            $abilityScore = 14;
+        }
+    }
+
+    return $abilityScore;
+
+}
+
+function demiHumanCharismaRange($abilityScore, $species)
+{   
+    
+    if($species === "Dwarf")
+    {
+        if($abilityScore > 16)
+        {
+            $abilityScore = 16;
+        }
+    }
+
+    if($species === "Gnome")
+    {
+        if($abilityScore < 8)
+        {
+            $abilityScore = 8;
+        }
+    }
+    
+    if($species === "Half-Orc")
+    {
+        if($abilityScore > 12)
+        {
+            $abilityScore = 12;
+        }
+    }
+
+    return $abilityScore;
+
+}
+
 
 
 ?>
