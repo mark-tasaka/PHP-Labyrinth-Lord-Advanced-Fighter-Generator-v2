@@ -3,6 +3,17 @@ The Labyrinth Lord Advanced Companion Fighter Character Generator Version 2 is t
 
 -------------
 
+A live version of the Labyrinth Lord Advanced Companion Fighter Character Generator Version 2 is available at:
+
+https://www.oldschooladventures.org/ll/classes2/fighter/
+
+-----------
+
+
+Update 1.02: 2022-07-07
+
+Updates to fighter.php, fighter.css, fighter.png, abilityScoreGen.php, classDetails.php, and demiHumans.php.  New file, abilityAddition.php, added.  A link to a live version of the generator added.
+
 
 Update 1.01: 2022-07-05
 
